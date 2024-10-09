@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 8080;
 
 
 const URL_MONGO = process.env.URL_MONGO;
-console.log(process.env.URL_MONGO);
+
 
 app.use(bodyParser.json());
 app.use(express.json());
