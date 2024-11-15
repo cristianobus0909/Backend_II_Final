@@ -1,5 +1,6 @@
 import { Router } from "express";
-import userModel from "../models/userModel.js";
+import userModel from "../services/dao/db/models/user.models.js";
+import passport from "passport";
 
 const routerSessions = Router();
 
@@ -66,7 +67,6 @@ routerSessions.get('/', autenticateUser, (req,res)=>{
     res.send(req.session.user.role);
 })
 
-//Eliminar la session y cerrar la sesion del usuario
 routerSessions.get("/logout", (req,res)=>{
     req.session.destroy((error) => {
         if (error) {
@@ -74,6 +74,19 @@ routerSessions.get("/logout", (req,res)=>{
         } 
         res.status(200).send({message:"La sesión se ha cerrado correctamente"});
     });
+});
+
+routerSessions.get("/github", passport.authenticate('github', { scope: ['user:email'] }));
+
+routerSessions.get("/githubcallback", passport.authenticate('github', {failureRedirect:'/github/error'}), async(req,res)=>{
+    const user = req.user;
+    req.session.user = {
+        name:`${user.first_name} ${user.last_name}`,
+        email:user.email,
+        age:user.age
+    }
+    req.session.admin = true;
+    res.redirect('/users');
 });
 
 

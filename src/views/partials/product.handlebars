@@ -1,0 +1,21 @@
+    <div class="container">
+        <div class="d-flex justify-content-around flex-wrap">
+            {{#each products}}
+                <div class="card  mb-3" style="width: 18rem; border-radius: 10px;">
+                    <div class="card-body">
+                        <li>
+                        {{#if thumbnail}}
+                            <img src={{thumbnail}} class="card-img-top" alt="...">
+                        {{else}}
+                            <img src="https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?w=740&t=st=1699187254~exp=1699187854~hmac=6dc0424826b7aa7168fb633cb9a20b855b2a863526e6e6a7f16a72dfa69f47ba" class="card-img-top" alt="...">
+                        {{/if}}
+                            <h5>{{id}}</h5>
+                            <h4 class="card-title text-uppercase">{{title}}</h4>
+                            <p class="card-text">{{description}}</p>
+                            <p>Precio: {{price}}</p>
+                        </li>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>

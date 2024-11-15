@@ -1,0 +1,45 @@
+<div class="cart-container">
+    <h1 class="cart-title">Carrito de Compras</h1>
+
+    <!-- Lista de productos en el carrito -->
+    <div class="cart-items">
+        <!-- Producto 1 -->
+        <div class="cart-item">
+            <img src="producto1.jpg" alt="Producto 1" class="cart-item-image">
+            <div class="cart-item-details">
+                <h2 class="cart-item-name">Producto 1</h2>
+                <p class="cart-item-price">$10.00</p>
+                <div class="cart-item-quantity">
+                    <button class="quantity-btn">-</button>
+                    <input type="text" value="1" class="quantity-input">
+                    <button class="quantity-btn">+</button>
+                </div>
+            </div>
+            <button class="cart-item-remove">Eliminar</button>
+        </div>
+        
+        <!-- Producto 2 -->
+        <div class="cart-item">
+            <img src="producto2.jpg" alt="Producto 2" class="cart-item-image">
+            <div class="cart-item-details">
+                <h2 class="cart-item-name">Producto 2</h2>
+                <p class="cart-item-price">$20.00</p>
+                <div class="cart-item-quantity">
+                    <button class="quantity-btn">-</button>
+                    <input type="text" value="1" class="quantity-input">
+                    <button class="quantity-btn">+</button>
+                </div>
+            </div>
+            <button class="cart-item-remove">Eliminar</button>
+        </div>
+    </div>
+
+    <!-- Total y botón de compra -->
+    <div class="cart-summary">
+        <p class="cart-total">Total: $30.00</p>
+        <button class="checkout-btn">Realizar Compra</button>
+    </div>
+</div>
+
+
+<script src="/js/cart.js"></script>

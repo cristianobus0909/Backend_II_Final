@@ -1,20 +1,25 @@
-<div>
-        <h1>Registrate!!</h1>
-        <form id="registerForm">
-                <label>Nombre</label>
-                <input type="text" name="first_name" /><br />
-                <label>Apellido</label>
-                <input type="text" name="last_name" /><br />
-                <label>Email</label>
-                <input type="text" name="email" /><br />
-                <label>Edad</label>
-                <input type="text" name="age" /><br />
-                <label>Contraseña</label>
-                <input type="password" name="password" /><br />
+<div class="register-container">
+    <h1 class="register-title">¡Regístrate!</h1>
+    <form id="registerForm" class="register-form">
+        <label class="register-label">Nombre</label>
+        <input type="text" name="first_name" class="register-input" /><br />
         
-                <input type="submit">
-        </form>
-        <p>¿Ya tienes una cuenta?</p><a href="/users/login">Inicia sesión</a><br />
+        <label class="register-label">Apellido</label>
+        <input type="text" name="last_name" class="register-input" /><br />
+        
+        <label class="register-label">Email</label>
+        <input type="text" name="email" class="register-input" /><br />
+        
+        <label class="register-label">Edad</label>
+        <input type="text" name="age" class="register-input" /><br />
+        
+        <label class="register-label">Contraseña</label>
+        <input type="password" name="password" class="register-input" /><br />
+        
+        <input type="submit" class="register-submit">
+    </form>
+    <p class="register-text">¿Ya tienes una cuenta?</p>
+    <a href="/users/login" class="register-link">Inicia sesión</a><br />
 </div>
 
 <script src="/js/register.js"></script>

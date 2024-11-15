@@ -1,0 +1,27 @@
+<div>
+    <h1>My E-commerce</h1>
+    <h2>Bienvenido</h2>
+    <h2 class="userName"></h2>
+</div>
+
+
+<div class="containerAdd">
+    <form class="addProductForm" id="addProductForm" action="/realtimeproducts" method="POST">
+        <input type="text" name="title" placeholder="Nombre del producto" required>
+        <input type="number" name="price" placeholder="Precio" required>
+        <input type="text" name="description" placeholder="Descripcion" required>
+        <input type="text" name="category" placeholder="Categoria" required>
+        <input type="text" name="thumbnails" placeholder="Foto" required>
+        <input type="number" name="code" placeholder="Codigo" required>
+        <input type="number" name="stock" placeholder="Stock" required>
+        <button type="submit">Agregar Producto</button>
+    </form>
+</div>
+<div class="containerDelete">
+    <form class="deleteProductForm" id="deleteProductForm" action="/realtimeproducts" method="POST">
+        <input type="number" name="productId" placeholder="ID del producto a eliminar" required>
+        <button type="submit">Eliminar Producto</button>
+    </form>
+</div>
+
+{{>product}}
