@@ -38,7 +38,7 @@ export const passportCall = (strategy) => {
         passport.authenticate(strategy, function (err, user, info) {
             if (err) return next(err);
             if (!user) {
-                return res.status(400).send({ message: info ? info.message : "Error de autenticación" });
+                return res.status(401).send({ message: info ? info.message : "Error de autenticación" });
             }
             req.user = user;
             next();
@@ -49,9 +49,9 @@ export const passportCall = (strategy) => {
 
 export const  autorization = (role)=>{
     return async (req,res,next)=>{
-        if(!req.user) return res.status(401).send({message : 'No Autorizado'});
+        if(!req.user) return res.status(403).send({message : 'No Autorizado'});
         if (req.user.role !== role) {
-            return res.status(403).send('Forbidden: El usuario no tiene permisos con este rol.')
+            return res.status(403).send(`Forbidden: Requires ${role} role`)
         };
         next();
     };

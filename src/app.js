@@ -3,11 +3,6 @@ import handlebars from 'express-handlebars';
 import { Server } from 'socket.io';
 import __dirname from './utils.js'
 import dotenv from  'dotenv';
-import routerUsers from './routes/users.views.routes.js';
-import routerCarts from './routes/carts.routes.js';
-import routerProducts from './routes/products.routes.js';
-import routerSessions from './routes/sessions.routes.js';
-import viewsRouter from './routes/views.routes.js';
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
@@ -15,6 +10,14 @@ import MongoStore from 'connect-mongo';
 import session from 'express-session';
 import initializePassport from './config/passport.config.js';
 import passport from 'passport';
+
+import routerUsers from './routes/users.views.routes.js';
+import routerCarts from './routes/carts.routes.js';
+import routerProducts from './routes/products.routes.js';
+import jwtRoutes from './routes/jwt.routes.js';
+import routerSessions from './routes/sessions.routes.js'
+import viewsRouter from './routes/views.routes.js';
+// import MongoSingleton from './config/mongodb-singleton.js';
 
 dotenv.config();
 
@@ -51,13 +54,14 @@ app.use(session({
 initializePassport();
 app.use(passport.initialize())
 
+
 app.use('/', viewsRouter);
 app.use('/users',routerUsers);
 app.use('/api/sessions',routerSessions);
 app.use('/api/products',routerProducts);
 app.use('/api/carts',routerCarts);
 
-
+// MongoSingleton()
 
 mongoose.connect(URL_MONGO, {dbName: 'ecommerce'})
 .then(()=>{

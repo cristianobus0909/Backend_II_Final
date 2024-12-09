@@ -5,11 +5,11 @@ import { PRIVATE_KEY, createHash, isValidPassword} from '../utils.js';
 import userModel from '../services/dao/db/models/user.models.js';
 import jwt from 'passport-jwt';
 import config from './config.js';
+import cartsModel from '../services/dao/db/models/carts.models.js';
 
 const JWTStrategy = jwt.Strategy;
 const ExtractJwt =  jwt.ExtractJwt;
 const LocalStrategy = local.Strategy;
-
 
 
 const initializePassport = ()=>{
@@ -28,7 +28,7 @@ const initializePassport = ()=>{
             console.log('Payload ', jwt_payload);
             return done(null, jwt_payload.user)
         } catch (error) {
-            
+            return done(error)
         }
     }))
     passport.use('register', new LocalStrategy({
@@ -38,6 +38,7 @@ const initializePassport = ()=>{
         const { first_name,last_name,email,age} =  req.body;
         try {
             const user = await userModel.findOne({ email : userName });
+            const cart = await cartsModel.create();
             
             if(user) return done(null, false, { message:'El usuario ya existe.'});
             const newUser = {
@@ -46,6 +47,7 @@ const initializePassport = ()=>{
                 email,
                 age,
                 password:createHash(password),
+                cart: cart
             };
             const result = await userModel.create(newUser);
             return done(null,result);
@@ -53,23 +55,23 @@ const initializePassport = ()=>{
             return done(error)
         }
     }));
-    // passport.use('login', new LocalStrategy({
-    //     passReqToCallback: true,
-    //     usernameField:'email'
-    // },async(userName,password,done)=>{
-    //     try {
-    //         const user = await userModel.findOne({email:userName});
-    //         if (!user) {
-    //             console.log({ message: 'No se ha encontrado un usuario con esas credenciales' });
-    //             return done(null, false);
-    //         }
-    //         if (!isValidPassword(user,password)) return done(null, false);
-    //         return done(null,user);
+    passport.use('login', new LocalStrategy({
+        passReqToCallback: true,
+        usernameField:'email'
+    },async(req,userName,password,done)=>{
+        try {
+            const user = await userModel.findOne({ email : userName });
+            if (!user) {
+                console.log({ message: 'No se ha encontrado un usuario con esas credenciales' });
+                return done(null, false);
+            }
+            if (!isValidPassword(user,password)) return done(null, false);
+            return done(null,user);
             
-    //     } catch (error) {
-    //         return done(error);
-    //     }
-    // }))
+        } catch (error) {
+            return done(error);
+        }
+    }))
     passport.use('github', new GitHubStrategy({
         clientID: config.clientId ,
         clientSecret: config.clientSecret,

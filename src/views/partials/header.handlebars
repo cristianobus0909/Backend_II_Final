@@ -12,8 +12,12 @@
         </li>
     </ul>
     <div>
-        <a href="/users/login"><p>Iniciar sesion</p></a>
-        <a href="/users/register"><p>Registrate</p></a>
+        {{#if user}}
+            <a href="/users"><p>Mi Perfil</p></a>
+        {{else}}
+            <a href="/users/login"><p>Iniciar sesion</p></a>
+            <a href="/users/register"><p>Registrate</p></a>
+        {{/if}}
     </div>
     <div>
         <p class="userName"></p> 

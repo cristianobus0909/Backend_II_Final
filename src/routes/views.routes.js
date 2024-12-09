@@ -1,14 +1,15 @@
 import { Router } from "express";
 import productModel from "../services/dao/db/models/products.models.js";
+import { passportCall, autorization } from "../utils.js";
 
 const router = Router()
 
 router.get('/', async (req, res)=>{
-    let products = await productModel.find()
-    products = await productModel.aggregate([
-        { $group: { _id: "$category", total: { $sum: "$price" }}},
-        // { $sort: { totalQuantity: -1}}
-    ])
+    let products = await productModel.find().lean();
+    // products = await productModel.aggregate([
+    //     { $group: { _id: "$category", total: { $sum: "$price" }}},
+    //     { $sort: { totalQuantity: -1}}
+    // ])
     
     res.render('home',{
         title: 'Backend | Handlebars',
@@ -16,10 +17,15 @@ router.get('/', async (req, res)=>{
     });
 })
 
-router.get('/realtimeproducts', (req, res)=>{
-    const products = productModel.find()
-    res.render('realTimeProducts',{products})
-})
+router.get('/realtimeproducts',passportCall('jwt',{session:false}),autorization("admin"), async (req, res) => {
+    try {
+        const products = await productModel.find().lean(); 
+        res.render('realTimeProducts', { products });
+    } catch (error) {
+        console.error("Error al obtener los productos:", error);
+        res.status(500).send("Error interno del servidor");
+    }
+});
 router.post('/realtimeproducts', async(req, res)=>{
     const {
         title,
@@ -61,7 +67,13 @@ router.delete('/realtimeproducts', async(req, res)=>{
 router.get('/chat', (req, res)=>{
     res.render('chat',{})
 })
-router.get('/cart', (req, res)=>{
+router.get('/product', (req, res)=>{
+    res.render('product',{})
+})
+router.get('/product/:pid', (req, res)=>{
+    res.render('productDetail',{})
+})
+router.get('/carts', (req, res)=>{
     res.render('cart',{})
 })
 export  default router;

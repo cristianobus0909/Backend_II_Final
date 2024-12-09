@@ -1,11 +1,12 @@
 import { Router } from "express";
+import userModel from "../services/dao/db/models/user.models.js";
 import passport from "passport";
-import { isValidPassword, authToken, generateToken } from "../utils.js";
+import { isValidPassword, authToken, generateToken, passportCall, autorization } from "../utils.js";
 
 const router = Router();
 
 
-router.post('/login', passport.authenticate('login',{failureRedirect:'/api/jwt/login-failed'}),
+router.post('/login', passport.authenticate('login',{failureRedirect:'/api/sessions/login-failed'}),
     async (req, res) => {
         try {
             const {email, password} = req.body
@@ -35,5 +36,12 @@ router.post("/register",passport.authenticate('register', {session:false}), asyn
     res.status(201).send({status:'success', message: 'usuario creado correctamente'});
 });
 
+router.get('/current', passportCall('jwt',{session:false}),autorization("user"),(req,res)=>{
+    res.send(req.user);
+});
+router.get('/login-failed',(req,res)=>{
+    res.send({error:"Error al intentar logearse"});
+});
 
-export default router;
+const jwtRoutes = router;
+export default jwtRoutes;
