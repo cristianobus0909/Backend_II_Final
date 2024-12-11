@@ -30,7 +30,7 @@ const getCartById = async(req,res)=>{
         if (!cartProducts) {
             return res.status(404).json({ message: 'No se encontró el carrito.' })
         }
-        res.status(200).send(cartProducts);
+        res.render('cart', { cartProducts });
         
     } catch (error) {
         console.error("Error al obtener el carrito:", error);

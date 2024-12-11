@@ -1,21 +1,55 @@
-    <div class="container">
-        <div class="d-flex justify-content-around flex-wrap">
-            {{#each products}}
-                <div class="card  mb-3" style="width: 18rem; border-radius: 10px;">
-                    <div class="card-body">
-                        <li>
-                        {{#if thumbnails}}
-                            <img src={{thumbnails}} class="card-img-top" alt="...">
-                        {{else}}
-                            <img src="https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?w=740&t=st=1699187254~exp=1699187854~hmac=6dc0424826b7aa7168fb633cb9a20b855b2a863526e6e6a7f16a72dfa69f47ba" class="card-img-top" alt="...">
-                        {{/if}}
-                            <h5>{{code}}</h5>
-                            <h4 class="card-title text-uppercase">{{title}}</h4>
-                            <p class="card-text">{{description}}</p>
-                            <p>Precio: {{price}}</p>
-                        </li>
+<div class="container">
+    <div class="d-flex justify-content-around flex-wrap">
+        {{#each products}}
+            <div class="card mb-3" style="width: 18rem; border-radius: 10px;">
+                {{#if this.thumbnails}}
+                    <img src="{{this.thumbnails}}" class="card-img-top" alt="Imagen del producto">
+                {{else}}
+                    <img src="https://img.freepik.com/vector-gratis/ilustracion-icono-galeria_53876-27002.jpg?w=740&t=st=1699187254~exp=1699187854~hmac=6dc0424826b7aa7168fb633cb9a20b855b2a863526e6e6a7f16a72dfa69f47ba" class="card-img-top" alt="Imagen por defecto">
+                {{/if}}
+                <div class="card-body">
+                    <h5 class="text-muted">{{this.code}}</h5>
+                    <h4 class="card-title text-uppercase">{{this.title}}</h4>
+                    <p class="card-text">{{this.description}}</p>
+                    <p><strong>Precio:</strong> ${{this.price}}</p>
+                    <div class="d-flex justify-content-between">
+                        <!-- Enlace para ver más detalles -->
+                        <a href="/products/{{this._id}}" class="btn btn-primary btn-sm">Ver detalles</a>
+                        <!-- Botón para agregar al carrito -->
+                        <button class="btn btn-success btn-sm add-to-cart" data-id="{{this._id}}">Agregar al carrito</button>
                     </div>
                 </div>
-            {{/each}}
-        </div>
+            </div>
+        {{/each}}
     </div>
+
+    <!-- Paginación -->
+    <div class="pagination mt-4">
+        <nav aria-label="Paginación">
+            <ul class="pagination justify-content-center">
+                {{#if pagination.hasPrevPage}}
+                    <li class="page-item">
+                        <a class="page-link" href="/products?page={{pagination.prevPage}}" aria-label="Página anterior">
+                            &laquo; Anterior
+                        </a>
+                    </li>
+                {{/if}}
+                <li class="page-item active">
+                    <span class="page-link">Página {{pagination.currentPage}} de {{pagination.totalPages}}</span>
+                </li>
+                {{#if pagination.hasNextPage}}
+                    <li class="page-item">
+                        <a class="page-link" href="/products?page={{pagination.nextPage}}" aria-label="Página siguiente">
+                            Siguiente &raquo;
+                        </a>
+                    </li>
+                {{/if}}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+
+

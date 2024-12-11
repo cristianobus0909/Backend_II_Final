@@ -67,11 +67,11 @@ router.delete('/realtimeproducts', async(req, res)=>{
 router.get('/chat', (req, res)=>{
     res.render('chat',{})
 })
-router.get('/product', (req, res)=>{
+router.get('/products', (req, res)=>{
     res.render('product',{})
 })
 router.get('/product/:pid', (req, res)=>{
-    res.render('productDetail',{})
+    res.render('productDetails',{})
 })
 router.get('/carts', (req, res)=>{
     res.render('cart',{})

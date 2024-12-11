@@ -7,7 +7,10 @@ export default class ProductServices {
         
     }
     getAll = async () => {
-        const result = await ProductModel.getAll();
+        let page;
+        let limit;
+        const options = { page, limit, lean: true };
+        const result = await ProductModel.find().paginate({},options);
         return result;
     };
     getById = async (id) => {
