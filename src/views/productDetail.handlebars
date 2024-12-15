@@ -1,0 +1,12 @@
+<h1>{{product.title}}</h1>
+<p>{{product.description}}</p>
+<p>Precio: ${{product.price}}</p>
+<p>Categoría: {{product.category}}</p>
+<form action="/api/carts/{{user.cart}}/products/{{product._id}}" method="POST" class="add-to-cart-form">
+    <input type="number" name="quantity" min="1" value="1">
+    <button type="submit">Agregar al carrito</button>
+</form>
+<a href="/products">Volver a la lista</a>
+
+
+<script src="../public/js/cart.js"></script>

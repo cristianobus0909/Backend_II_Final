@@ -15,17 +15,14 @@ const LocalStrategy = local.Strategy;
 const initializePassport = ()=>{
     const cookieExtractor = req =>{
         let token = null;
-        if(req && req.cookies) token = req.cookies['jwt'];
+        if(req && req.cookies) token = req.cookies['jwtCookieToken'];
         return token;
     };
     passport.use('jwt', new JWTStrategy({
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
         secretOrKey: PRIVATE_KEY
     },async(jwt_payload,done)=>{
-        console.log('Entrando a pasport Strategy con JWT');
         try {
-            console.log('JWT obtenido del Payload');
-            console.log('Payload ', jwt_payload);
             return done(null, jwt_payload.user)
         } catch (error) {
             return done(error)
@@ -47,7 +44,7 @@ const initializePassport = ()=>{
                 email,
                 age,
                 password:createHash(password),
-                cart: cart
+                cart: cart._id
             };
             const result = await userModel.create(newUser);
             return done(null,result);

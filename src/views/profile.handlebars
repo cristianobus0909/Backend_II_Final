@@ -1,8 +1,37 @@
 <div>
     <h1>Bienvenido</h1>
-    <p>{{user.name}}</p>
-    <p>{{user.email}}</p>
-    <p>{{user.age}}</p>
+    {{#if user}}
+        <p>{{user.name}}</p>
+        <p>{{user.email}}</p>
+        <p>{{user.age}}</p>
+    {{else}}
+        <p>Usuario no autenticado.</p>
+    {{/if}}
 
-    <a href="/users/logout">Cerrar sesion</a>
+    <a id="logoutBtn" href="/users/logout">Cerrar sesión</a>
 </div>
+
+<script>
+    
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    logoutBtn.addEventListener('click', function (event) {
+        event.preventDefault(); 
+        localStorage.removeItem('authToken'); 
+        
+        
+        fetch('/users/logout', { method: 'GET' })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/users/login';
+                } else {
+                    console.error('Error al cerrar sesión:', response.statusText);
+                    alert('No se pudo cerrar sesión. Inténtalo más tarde.');
+                }
+            })
+            .catch(error => {
+                console.error('Error al cerrar sesión:', error);
+                alert('Error en la conexión. Inténtalo más tarde.');
+            });
+    });
+</script>

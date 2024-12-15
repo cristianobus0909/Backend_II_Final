@@ -21,7 +21,6 @@ loginForm.addEventListener('submit', function (event) {
         body: JSON.stringify(obj),
         headers: {
             "Content-Type": "application/json",
-            "Autorization": `Bearer${localStorage.getItem("authToken")}`
         }
     })
     .then(result => {

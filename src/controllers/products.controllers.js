@@ -7,7 +7,7 @@ const getProducts = async(req,res)=>{
         const limit = parseInt(req.query.limit) || 10;
         const page = parseInt(req.query.page) || 1;
         const filters = { status: true, category: req.query.category };
-        const products = await productServices.getAll(filters,{ page, limit });
+        const products = await productServices.getAll(filters,{ page, limit, lean });
         res.status(200).send({result: "success", payload:products})
         
     } catch (error) {

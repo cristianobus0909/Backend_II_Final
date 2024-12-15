@@ -18,9 +18,10 @@ const loginUser = async (req, res) => {
             age:user.age,
             role:user.role
         }
+        
         const token = generateToken(tokenUser);
         res.cookie('jwtCookieToken', token,{maxAge:900000, httpOnly: true});
-        res.send(`Bienvenido ${tokenUser.name}`);
+        res.send({message:`Bienvenido ${tokenUser.name}`});
     } catch (error) {
         console.error(error);
         return  res.status(500).json("Error interno de la aplicacion")
@@ -35,21 +36,24 @@ const logoutUser = (req,res)=>{
         if (error) {
             return res.status(500).send({ message: "Error al Cerrar Sesión", error });
         } 
+        res.clearCookie("connect.sid", {
+            path:"/",
+            httpOnly: true,
+            secure: false
+        })
         res.status(200).send({message:"La sesión se ha cerrado correctamente"});
     });
 }
 const loginFailUser = (req,res)=>{
     res.send({error:"Error al intentar logearse"});
 }
-const profileUser = (req,res)=>{
-    res.redirect('/users',{
-        user: req.user
-    })
-}
+const profileUser = (req, res) => {
+    req.session.user = req.user; 
+    res.redirect('/users');
+};
 const adminUser = (req,res)=>{
-    res.redirect('/',{
-        user: req.user
-    })
+    req.session.admin = true;
+    res.redirect('/users');
 }
 const gitHubUser = async(req,res)=>{
     const user = req.user;

@@ -40,7 +40,7 @@ const getCartById = async(req,res)=>{
 
 const addProductToCart = async (req, res) => {
     try {
-        const cartId = req.params.cid;
+        const cartId = req.user.cart;
         const productId = req.params.pid;
         const { quantity } = req.body;
 
@@ -70,8 +70,8 @@ const addProductToCart = async (req, res) => {
                 quantity: quantity
             });
         }
-
         await cart.save();
+        await cartService.update(cart._id, cart.products) 
 
         res.status(200).json({ message: "Producto agregado al carrito.", cart });
     } catch (error) {

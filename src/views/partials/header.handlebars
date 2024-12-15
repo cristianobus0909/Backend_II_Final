@@ -5,20 +5,24 @@
             <a class="nav-link" href="/">Inicio</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/api/products">Productos</a>
+            <a class="nav-link" href="/products">Productos</a>
         </li>
+        {{#if user}}
+        <li class="nav-item">
+                <a class="nav-link" href="/users"><p>Mi Perfil</p></a>
+        </li>
+        {{else}}
+        <li class="nav-item">
+                <a class="nav-link" href="/users/login"><p>Iniciar sesion</p></a>
+        </li>
+        <li class="nav-item">
+                <a class="nav-link" href="/users/register"><p>Registrate</p></a>
+        </li>
+        {{/if}}
         <li class="nav-item">
             <a class="nav-link" href="/api/carts/">🛒</a>
         </li>
     </ul>
-    <div>
-        {{#if user}}
-            <a href="/users"><p>Mi Perfil</p></a>
-        {{else}}
-            <a href="/users/login"><p>Iniciar sesion</p></a>
-            <a href="/users/register"><p>Registrate</p></a>
-        {{/if}}
-    </div>
     <div>
         <p class="userName"></p> 
     </div>
